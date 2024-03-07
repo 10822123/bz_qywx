@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Example</title>
+</head>
+<body>
+
+<script>
+    const eventSource = new EventSource('/sse-endpoint');
+
+    eventSource.onmessage = function(event) {
+        console.log('Received message:', event.data);
+        // 处理从服务器接收到的事件数据，这里可以更新页面上的内容等
+        document.getElementById('output').innerHTML = event.data;
+    };
+</script>
+
+<div id="output">Waiting for events...</div>
+
+</body>
+</html>
