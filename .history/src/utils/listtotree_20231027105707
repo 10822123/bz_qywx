@@ -1,0 +1,29 @@
+function listToTree(list, parentIdField, childrenField) {  
+  const result = [];  
+  const map = {};  
+  
+  // 遍历列表，将每个节点存储到map中  
+  list.forEach(item => {  
+    const node = { ...item, [childrenField]: [] };  
+    map[item[parentIdField]] = { ...map[item[parentIdField]], [item[childrenField]]: node };  
+  });  
+  
+  // 构建树结构  
+  const stack = [...map.keys()];  
+  while (stack.length > 0) {  
+    const id = stack.pop();  
+    const node = map[id];  
+    result.push(node);  
+  
+    const parentId = node[parentIdField];  
+    if (parentId !== null && map[parentId]) {  
+      // 将当前节点添加到父节点的children数组中  
+      map[parentId][childrenField].push(node);  
+    } else {  
+      // 将当前节点添加到栈中，作为下一层级节点的父节点  
+      stack.push(id);  
+    }  
+  }  
+  
+  return result;  
+}
